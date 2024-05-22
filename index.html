@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>eiPassi</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="main">
+      <div class="benefit-sites favorites"></div>
+      <div class="benefit-sites results" style="display: none;"></div>
+      <div class="search">
+        <input class="search-input" type="search" placeholder="Hae käyttöpaikkaa">
+      </div>
+    </div>
+    <template id="benefit-site-template">
+      <img class="site-image">
+      <div class="label">
+        <div class="site-name"></div>
+        <div class="site-categories"></div>
+      </div>
+      <a class="site-link"></a>
+      <button class="favorite-button">
+        <div class="favorite-icon">❤️</div>
+      </button>
+    </template>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
