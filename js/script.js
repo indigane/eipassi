@@ -6,16 +6,25 @@ const favorites = JSON.parse(localStorage.getItem('favorites') ?? '[]');
 
 function initialize() {
   customElements.define('benefit-site', BenefitSiteElement);
-  searchInput.addEventListener('input', debounce(() => performSearch(searchInput.value), 300));
+  searchInput.addEventListener('input', handleSearchInput);
   renderFavorites();
 }
 
 
-async function performSearch(query) {
-  query = query.trim();
+function handleSearchInput() {
+  const query = searchInput.value.trim();
   if ( ! query) {
     renderFavorites();
     resultsContainer.replaceChildren();
+  }
+  debouncedSearch(query);
+}
+
+
+const debouncedSearch = debounce(() => performSearch(searchInput.value), 3000);
+
+async function performSearch(query) {
+  if ( ! query) {
     return;
   }
   const response = await fetch('https://corsproxy.io/?https://services.epassi.fi/api/discovery/v1/nearby', {
