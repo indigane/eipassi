@@ -111,7 +111,14 @@ class BenefitSiteElement extends HTMLElement {
     }
   }
   connectedCallback() {
-    this.favoriteButton.addEventListener('click', () => this.toggleFavorite());
+    // Debounce toggle in case both click and touchend trigger
+    const debouncedToggleFavorite = debounceImmediate(() => this.toggleFavorite(), 200);
+    this.favoriteButton.addEventListener('click', debouncedToggleFavorite);
+    this.favoriteButton.addEventListener('touchend', (event) => {
+      // Workaround to keep virtual keyboard open on tap
+      event.preventDefault();
+      debouncedToggleFavorite();
+    });
   }
   serialize() {
     if ( ! this.benefitSite) {
@@ -161,6 +168,19 @@ function debounce(func, waitMilliseconds) {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       func.apply(this, args);
+    }, waitMilliseconds);
+  };
+}
+
+function debounceImmediate(func, waitMilliseconds) {
+  let timeout = null;
+  return function debouncedFunc(...args) {
+    if (timeout === null) {
+      func.apply(this, args);
+    }
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      timeout = null;
     }, waitMilliseconds);
   };
 }
