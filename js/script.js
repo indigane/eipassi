@@ -21,7 +21,7 @@ function handleSearchInput() {
 }
 
 
-const debouncedSearch = debounce(() => performSearch(searchInput.value), 3000);
+const debouncedSearch = debounce(() => performSearch(searchInput.value), 300);
 
 async function performSearch(query) {
   if ( ! query) {
@@ -66,14 +66,19 @@ function handleSearchResult(result) {
 
 function renderFavorites() {
   favoritesContainer.replaceChildren();
-  for (const favorite of favorites) {
-    const benefitSiteElement = BenefitSiteElement.unserialize(favorite);
-    benefitSiteElement.classList.add('favorited');
-    favoritesContainer.appendChild(benefitSiteElement);
+  if (favorites.length === 0) {
+    favoritesContainer.insertAdjacentHTML('beforeend', '<div class="favorites-empty"><p>Hae hakusanoilla<br>tai kiinnitä<br>suosikkisi tähän<br>sydänkuvaketta<br>painamalla.</p></div>');
   }
-  for (let i = 0; i < 10; i++) {
-    const benefitSiteElement = new BenefitSiteElement();
-    favoritesContainer.appendChild(benefitSiteElement);
+  else {
+    for (const favorite of favorites) {
+      const benefitSiteElement = BenefitSiteElement.unserialize(favorite);
+      benefitSiteElement.classList.add('favorited');
+      favoritesContainer.appendChild(benefitSiteElement);
+    }
+    for (let i = 0; i < 10; i++) {
+      const benefitSiteElement = new BenefitSiteElement();
+      favoritesContainer.appendChild(benefitSiteElement);
+    }
   }
   resultsContainer.style.display = 'none';
   favoritesContainer.style.display = '';
