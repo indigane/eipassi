@@ -8,6 +8,7 @@ function initialize() {
   customElements.define('benefit-site', BenefitSiteElement);
   searchInput.addEventListener('input', debounce(() => performSearch(searchInput.value), 300));
   renderFavorites();
+  performSearch('napoli');
 }
 
 
