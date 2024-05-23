@@ -6,6 +6,7 @@ const favorites = JSON.parse(localStorage.getItem('favorites') ?? '[]');
 
 function initialize() {
   customElements.define('benefit-site', BenefitSiteElement);
+  customElements.define('animated-image', AnimatedImage);
   searchInput.addEventListener('input', handleSearchInput);
   renderFavorites();
 }
@@ -85,6 +86,11 @@ function renderFavorites() {
 }
 
 
+function persistFavorites() {
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+}
+
+
 class BenefitSiteElement extends HTMLElement {
   template = document.querySelector('#benefit-site-template');
 
@@ -160,8 +166,29 @@ class BenefitSiteElement extends HTMLElement {
 }
 
 
-function persistFavorites() {
-  localStorage.setItem('favorites', JSON.stringify(favorites));
+class AnimatedImage extends HTMLElement {
+  constructor() {
+    super();
+  }
+  connectedCallback() {
+    const img = document.createElement('img');
+    img.src = this.src ?? this.getAttribute('src');
+    img.style.opacity = '0';
+    img.addEventListener('load', () => img.animate(
+      [
+        {opacity: '0'},
+        {opacity: '1'},
+      ], {
+        duration: 300,
+        easing: 'ease-in-out',
+        fill: 'forwards',
+      },
+    ));
+    for (const attribute of this.attributes) {
+      img.attributes.setNamedItem(this.attributes.removeNamedItem(attribute.name));
+    }
+    this.replaceWith(img);
+  }
 }
 
 
