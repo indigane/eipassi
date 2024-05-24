@@ -68,7 +68,7 @@ function handleSearchResult(result) {
 function renderFavorites() {
   favoritesContainer.replaceChildren();
   if (favorites.length === 0) {
-    favoritesContainer.insertAdjacentHTML('beforeend', '<div class="favorites-empty"><p>Hae hakusanoilla<br>tai kiinnitä<br>suosikkisi tähän<br>sydänkuvaketta<br>painamalla.</p></div>');
+    favoritesContainer.insertAdjacentHTML('beforeend', '<div class="favorites-empty"><p>Hae hakusanoilla<br>tai kiinnitä<br>suosikkisi tähän<br>sydänkuvakkeita<br>painamalla.</p></div>');
   }
   else {
     for (const favorite of favorites) {
