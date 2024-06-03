@@ -28,7 +28,7 @@ async function performSearch(query) {
   if ( ! query) {
     return;
   }
-  const response = await fetch('https://corsproxy.io/?https://services.epassi.fi/api/discovery/v1/nearby', {
+  const response = await fetch('https://idg-co-po.onrender.com/https://services.epassi.fi/api/discovery/v1/nearby', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
